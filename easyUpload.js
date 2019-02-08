@@ -7,6 +7,7 @@ var easyUpload =  {
         emptyFiles: 'لايوجد ملفات لرفعها',
         saved: 'تم الحفظ...'
     },
+    current_count: 0,
     fileList: {},
     debug: true,
     data: {},
@@ -22,7 +23,8 @@ var easyUpload =  {
         this.form = 'form' in options? options.form: this.form;
         this.input = 'input' in options? options.input: this.input;
         this.data = 'data' in options? options.data: this.data;
-
+        this.current_count = 'current_count' in options? options.current_count: this.current_count;
+        
         if ('ajax' in options) {
             this.ajaxOptions.url = 'url' in options.ajax? window.location.origin + '/' + options.ajax.url: this.ajaxOptions.url;
             this.ajaxOptions.type = 'type' in options.ajax? options.ajax.type: this.ajaxOptions.type;
@@ -133,7 +135,7 @@ var easyUpload =  {
         });
     },
     moreThanTen: function() {
-        var currentcount = $("#photoCount").attr("count");
+        var currentcount = this.current_count;
         var newCount = Object.keys(this.fileList).length;
         return parseInt(currentcount) + parseInt(newCount) > 10;
     },
@@ -169,6 +171,7 @@ var options = {
     data: {
         _token: $('input[name="_token"]').val()
     },
+    current_count: $("#photoCount").attr("count")
     //ajax: {
     //  url: 'listing/36/upload-photos',
     //  type: 'POST',
